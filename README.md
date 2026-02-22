@@ -40,7 +40,6 @@ Where:
 │   ├── 04_stochastic_model.ipynb   # Phase 3 — SDE calibration & Monte Carlo
 │   └── 05_trading.ipynb            # Phase 4 — Signal & backtesting
 ├── src/
-│   ├── features.py                 # Feature engineering pipeline
 │   ├── models.py                   # Stochastic volatility model
 │   └── backtest.py                 # Trading strategy & evaluation
 ├── outputs/
@@ -55,7 +54,7 @@ Where:
 
 | Variable | Source | Period |
 |---|---|---|
-| CSI 300 Index | Macrotrends | 2015–2025 |
+| CSI 300 Index | Investing.com | 2015–2025 |
 | PM2.5 / PM10 Beijing | US Embassy / WAQI archive | 2015–2025 |
 | VIX | Investing.com | 2015–2025 |
 | USD/CNH | Investing.com | 2015–2025 |
