@@ -26,13 +26,10 @@ Where:
 ```
 .
 ├── data/
-│   ├── raw/                        # Raw downloaded files
-│   │   ├── CSI.csv                 # CSI 300 index (Macrotrends)
-│   │   ├── beijing-air-quality.csv # PM2.5/PM10 daily (Beijing)
-│   │   ├── VIX.csv                 # CBOE VIX index
-│   │   └── USDCNH.csv              # USD/CNH exchange rate
-│   └── processed/
-│       └── csi300_pollution_df.csv # Clean merged dataset
+│   ├── CSI.csv                 # CSI 300 index (Macrotrends)
+│   ├── beijing-air-quality.csv # PM2.5/PM10 daily (Beijing)
+│   ├── VIX.csv                 # CBOE VIX index
+│   └── USDCNH.csv              # USD/CNH exchange rate
 ├── notebooks/
 │   ├── 01_data_cleaning.ipynb      # Phase 1 — Data processing & merging
 │   ├── 02_eda.ipynb                # Phase 1 — Exploratory analysis
