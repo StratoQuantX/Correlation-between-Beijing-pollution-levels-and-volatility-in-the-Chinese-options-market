@@ -11,7 +11,7 @@ This project investigates whether Beijing air pollution levels (PM2.5, AQI) have
 
 The core hypothesis is that pollution acts as a **drift modifier** in a stochastic volatility framework, captured by a parameter δ in a modified Heston-type SDE:
 
-$$d\sigma_t = \alpha(\theta - \sigma_t)dt + \delta \cdot \text{Pollution}_t \, dt + \beta \sqrt{\sigma_t} \, dW_t$$
+$$d\sigma_t = \alpha(\theta - \sigma_t)dt + \delta \cdot \text{Pollution}_t \ dt + \beta \sqrt{\sigma_t} \ dW_t$$
 
 Where:
 - **α** — mean-reversion speed
