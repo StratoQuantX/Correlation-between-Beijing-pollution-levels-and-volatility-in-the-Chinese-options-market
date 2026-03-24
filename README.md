@@ -1,4 +1,4 @@
-****# Beijing Pollution & Chinese Options Market Volatility
+# Beijing Pollution & Chinese Options Market Volatility
 ### Quant Research Project — Work in Progress
 
 > **Correlation Between Beijing Air Pollution (PM2.5) and the Volatility of the Chinese Options Market (CSI 300)**
