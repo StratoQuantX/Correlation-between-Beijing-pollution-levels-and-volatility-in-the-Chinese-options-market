@@ -95,4 +95,4 @@ pip install pandas numpy matplotlib statsmodels arch scipy yfinance
 
 ---
 
-*Research project — 2025*
+*Research project — 2025-2026*
