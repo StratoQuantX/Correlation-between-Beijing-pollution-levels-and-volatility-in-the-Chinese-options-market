@@ -1,4 +1,4 @@
-# Beijing Pollution & Chinese Options Market Volatility
+****# Beijing Pollution & Chinese Options Market Volatility
 ### Quant Research Project — Work in Progress
 
 > **Correlation Between Beijing Air Pollution (PM2.5) and the Volatility of the Chinese Options Market (CSI 300)**
@@ -77,7 +77,7 @@ Where:
 
 - **H1** : Pollution ↑ → Realized Volatility ↑
 - **H2** : Pollution impact is lagged (t+1 to t+5)
-- **H3** : Pollution acts as a drift modifier in stochastic volatility dynamics (parameter δ)
+- **H3** : Pollution acts as a sctructural drift modifier in stochastic volatility dynamics (parameter δ)
 
 ---
 
