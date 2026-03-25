@@ -77,7 +77,7 @@ Where:
 
 - **H1** : Pollution ↑ → Realized Volatility ↑
 - **H2** : Pollution impact is lagged (t+1 to t+5)
-- **H3** : Pollution acts as a sctructural drift modifier in stochastic volatility dynamics (parameter δ)
+- **H3** : Pollution acts as a structural drift modifier in stochastic volatility dynamics (parameter δ)
 
 ---
 
