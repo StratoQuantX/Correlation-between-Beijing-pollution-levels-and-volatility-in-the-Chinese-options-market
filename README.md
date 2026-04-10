@@ -166,6 +166,6 @@ Research Project StratoQuant
 
 *Gianni Marchetti — M2 MOFI, Aix-Marseille University*
 
-*Co-founders, StratoQuant*
+*Co-founders and Quant Researchers, StratoQuant*
 
 *2025–2026*
