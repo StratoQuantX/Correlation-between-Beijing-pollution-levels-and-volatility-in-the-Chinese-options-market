@@ -197,14 +197,14 @@ st.test_parameter_sensitivity(windows=[20, 25, 30, 45, 60],
 ## Citation
 
 ```
-Yassine [Last Name] (2026). Beijing Pollution and CSI 300 Volatility:
+Yassine Housseine, Gianni Marchetti (2026). Beijing Pollution and CSI 300 Volatility:
 A Pollution-Modified Heston Framework for Options Pricing and Volatility Trading.
-M2 MMMEF Research Project, Université Paris 1 Panthéon-Sorbonne.
-Submitted to CFA Society France Quant Awards 2026.
+Research Project StratoQuant
 ```
 
 ---
 
-*Yassine [Last Name] — M2 MMMEF, Université Paris 1 Panthéon-Sorbonne*
-*Co-founder, StratoQuant*
+*Yassine Housseine — M2 MMMEF, University of Paris 1 Panthéon-Sorbonne*
+*Gianni Marchetti — M2 MOFI, Aix-Marseille University*
+*Co-founders, StratoQuant*
 *2025–2026*
