@@ -11,9 +11,9 @@ This project investigates whether Beijing air pollution levels (PM2.5) have a st
 
 The central contribution is a **pollution-modified Heston stochastic volatility model** in which PM2.5 enters as an exogenous drift modifier in the variance equation:
 
-$$dS_t = rS_t \, dt + \sqrt{v_t} \, S_t \, dW_t^S$$
+$$dS_t = rS_t \ dt + \sqrt{v_t} \ S_t \ dW_t^S$$
 
-$$dv_t = \alpha(\theta - v_t) \, dt + \delta \cdot P_t \, dt + \beta\sqrt{v_t} \, dW_t^v, \quad \langle dW^S, dW^v \rangle = \rho \, dt$$
+$$dv_t = \alpha(\theta - v_t) \ dt + \delta \cdot P_t \ dt + \beta\sqrt{v_t} \ dW_t^v \quad \langle dW^S dW^v \rangle = \rho \ dt$$
 
 where $\delta$ captures the **systematic effect of pollution on the variance drift** — the key parameter of the model.
 
