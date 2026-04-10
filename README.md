@@ -118,10 +118,10 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 | Regime-switching | 0.97 | 62% | high | 26 |
 | **Delta-neutral strangle** | **1.67** | **86%** | low | 37 |
 
-- **Signal**: PM2.5 > rolling mean + 1σ (25-day window)
+- **Signal**: PM2.5 > rolling mean + 2σ (25-day window)
 - **Entry**: long OTM strangle (±5%), daily delta-hedge
-- **Exit**: after 50-day holding period
-- **Robustness**: Sharpe > 1.0 across all signal windows [20–45d] at holding ≥ 35d
+- **Exit**: after 60-day holding period, so 3 months trading
+- **Robustness**: Sharpe > 1.0 across all signal windows [20–45d] at holding ≥ 35d with the baseline strategy
 
 ---
 
@@ -140,14 +140,14 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 - Options P&L approximated via Black-Scholes using realized volatility — no historical IV data available for CSI 300 options. The near-zero VIX–realized vol spread at entry dates (mean = −0.004) suggests the approximation is reasonable, but results should be interpreted as an upper bound on achievable alpha.
 - Granger causality non-significant in the linear VAR framework — the pollution–volatility relationship operates through the variance process, not the conditional mean, motivating the SDE approach.
 - Walk-forward analysis identifies 2018 and 2020–2021 as drawdown periods, coinciding with structural vol regime shifts orthogonal to the pollution signal.
-- The pollution signal is informative in one direction only — long vol performs, short vol (iron condor) does not — consistent with the asymmetric tail risk profile of Chinese equity markets.
+- The pollution signal is informative in one direction only, i.e. long vol performs, short vol don't (we tried an iron condor, huge disaster in terms of PnL), consistent with the asymmetric tail risk profile of Chinese equity markets.
 
 ---
 
 ## Installation
 
 ```bash
-pip install pandas numpy matplotlib seaborn statsmodels arch scipy scikit-learn yfinance
+pip install pandas numpy matplotlib seaborn statsmodels arch scipy
 ```
 
 ---
