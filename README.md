@@ -67,9 +67,9 @@ Where:
 |---|---|---|
 | **Phase 1** | Data acquisition, cleaning, feature engineering | ✅ Done |
 | **Phase 2** | Correlations, Granger causality, GARCH-X | ✅ Done |
-| **Phase 3** | Stochastic volatility model (SDE + calibration) | 🔄 In progress |
-| **Phase 4** | Trading signal & backtesting | ⏳ Pending |
-| **Phase 5** | Research paper & presentation | ⏳ Pending |
+| **Phase 3** | Stochastic volatility model (SDE + calibration) | ✅ Done |
+| **Phase 4** | Trading signal & backtesting | ✅ Done |
+| **Phase 5** | Research paper & presentation | 🔄 In progress |
 
 ---
 
