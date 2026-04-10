@@ -152,46 +152,6 @@ pip install pandas numpy matplotlib seaborn statsmodels arch scipy
 
 ---
 
-## Usage
-
-```python
-import sys
-sys.path.append('..')
-
-from src.features import features_engineering
-from src.models import PollutionSVModel, HestonPricer, HestonPollutionPricer
-from src.backtest import DeltaNeutralStrangleBacktest, StressTest
-
-# Load and engineer features
-df = pd.read_csv('../data/processed/csi300_pollution_df.csv',
-                 index_col='Date', parse_dates=True)
-df = features_engineering(df)
-
-# Fit stochastic volatility model
-sv = PollutionSVModel(sigma=df['realized_vol'], pollution=df['pm25'])
-sv.fit()
-sv.summary()
-
-# Price options under pollution scenarios
-pricer = HestonPollutionPricer(sv_model=sv, S0=df['Close'].iloc[-1],
-                                returns_series=df['returns'], r=0.03)
-pricer.scenario_table(strikes=[df['Close'].iloc[-1] * m
-                                for m in [0.90, 0.95, 1.0, 1.05, 1.10]],
-                      T=1.0)
-
-# Run optimal backtest
-bt = DeltaNeutralStrangleBacktest(df=df, sv_model=sv,
-                                   signal_window=25, holding_days=60)
-bt.run()
-bt.summary()
-bt.plot()
-
-# Stress test
-st = StressTest(df, sv)
-st.test_parameter_sensitivity(windows=[20, 25, 30, 45, 60],
-                               holdings=[5, 10, 20, 30, 50])
-```
-
 ---
 
 ## Citation
