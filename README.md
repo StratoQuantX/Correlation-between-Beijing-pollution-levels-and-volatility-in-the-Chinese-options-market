@@ -65,7 +65,7 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 │   └── figures                    # All charts and visualizations
 │   └── eda_report.html            # Interactive EDA Report generated with ydata-profiling  
 │
-├── paper/                          # Research paper (LaTeX)
+├── Report.pdf                     # Research paper (LaTeX)
 └── README.md
 ```
 
