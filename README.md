@@ -34,7 +34,7 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 | Heston-Pollution premium vs baseline — ATM, High pol | **+70.8%** |
 | Heston-Pollution premium vs baseline — OTM +15%, High pol | **+143.2%** |
 | Best strategy — Delta-neutral strangle | **Sharpe 1.67, WR 86%** |
-| Optimal parameter zone | holding ∈ [40, 55d] × window ∈ [20, 35d] |
+| Optimal parameter zone | holding ∈ [40, 61d] × window ∈ [20, 35d] |
 | VIX–realized vol spread at entry (mean) | −0.004 ≈ 0 |
 
 ---
