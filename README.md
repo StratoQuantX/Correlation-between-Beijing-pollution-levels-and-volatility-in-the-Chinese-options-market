@@ -163,6 +163,9 @@ Research Project StratoQuant
 ---
 
 *Yassine Housseine — M2 MMMEF, University of Paris 1 Panthéon-Sorbonne*
+
 *Gianni Marchetti — M2 MOFI, Aix-Marseille University*
+
 *Co-founders, StratoQuant*
+
 *2025–2026*
