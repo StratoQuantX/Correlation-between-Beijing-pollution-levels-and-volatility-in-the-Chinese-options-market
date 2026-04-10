@@ -152,8 +152,6 @@ pip install pandas numpy matplotlib seaborn statsmodels arch scipy
 
 ---
 
----
-
 ## Citation
 
 ```
