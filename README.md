@@ -1,23 +1,41 @@
-# Beijing Pollution & Chinese Options Market Volatility
-### Quant Research Project — Work in Progress
+# Beijing Pollution & CSI 300 Volatility
+### A Quantitative Research Project
 
-> **Correlation Between Beijing Air Pollution (PM2.5) and the Volatility of the Chinese Options Market (CSI 300)**
+> **Does Beijing Air Pollution (PM2.5) Structurally Drive the Volatility of Chinese Options Markets?**
 
 ---
 
 ## Overview
 
-This project investigates whether Beijing air pollution levels (PM2.5, AQI) have a statistically significant and structurally meaningful impact on the implied and realized volatility of the CSI 300 options market.
+This project investigates whether Beijing air pollution levels (PM2.5) have a statistically significant and structurally meaningful impact on the realized volatility of the CSI 300 index, and quantifies the resulting mispricing in options markets.
 
-The core hypothesis is that pollution acts as a **drift modifier** in a stochastic volatility framework, captured by a parameter δ in a modified Heston-type SDE:
+The central contribution is a **pollution-modified Heston stochastic volatility model** in which PM2.5 enters as an exogenous drift modifier in the variance equation:
 
-$$d\sigma_t = \alpha(\theta - \sigma_t)dt + \delta \cdot \text{Pollution}_t \ dt + \beta \sqrt{\sigma_t} \ dW_t$$
+$$dS_t = rS_t \, dt + \sqrt{v_t} \, S_t \, dW_t^S$$
 
-Where:
-- **α** — mean-reversion speed
-- **θ** — long-run volatility level
-- **β** — volatility of volatility
-- **δ** — systematic effect of pollution on volatility drift
+$$dv_t = \alpha(\theta - v_t) \, dt + \delta \cdot P_t \, dt + \beta\sqrt{v_t} \, dW_t^v, \quad \langle dW^S, dW^v \rangle = \rho \, dt$$
+
+where $\delta$ captures the **systematic effect of pollution on the variance drift** — the key parameter of the model.
+
+The full pipeline spans data engineering, econometric analysis, stochastic calibration via Extended Kalman Filter with Milstein discretization, Monte Carlo options pricing, and systematic backtesting of volatility trading strategies.
+
+---
+
+## Key Results
+
+| Result | Value |
+|---|---|
+| **δ** — pollution effect on conditional variance | 0.0029 (p < 0.001) |
+| Mean pollution contribution to conditional variance | **26.5%** |
+| Kalman Filter — α (mean-reversion speed) | 2.661 |
+| Kalman Filter — θ (long-run vol level) | 0.100 |
+| Kalman Filter — half-life | 65.6 days |
+| ρ (spot-vol correlation) | −0.097 |
+| Heston-Pollution premium vs baseline — ATM, High pol | **+70.8%** |
+| Heston-Pollution premium vs baseline — OTM +15%, High pol | **+143.2%** |
+| Best strategy — Delta-neutral strangle | **Sharpe 1.67, WR 86%** |
+| Optimal parameter zone | holding ∈ [40, 55d] × window ∈ [20, 35d] |
+| VIX–realized vol spread at entry (mean) | −0.004 ≈ 0 |
 
 ---
 
@@ -26,23 +44,29 @@ Where:
 ```
 .
 ├── data/
-│   ├── CSI.csv                     # CSI 300 index (Macrotrends)
-│   ├── beijing-air-quality.csv     # PM2.5/PM10 daily (Beijing)
+│   ├── CSI.csv                     # CSI 300 index (Investing.com)
+│   ├── beijing-air-quality.csv     # PM2.5 / PM10 daily — Beijing
 │   ├── VIX.csv                     # CBOE VIX index
 │   └── USDCNH.csv                  # USD/CNH exchange rate
+│
 ├── notebooks/
 │   ├── 01_data_cleaning.ipynb      # Phase 1 — Data processing & merging
-│   ├── 02_eda.ipynb                # Phase 1 — Exploratory analysis
-│   ├── 03_econometrics.ipynb       # Phase 2 — Correlations, regressions, GARCH-X
-│   ├── 04_stochastic_model.ipynb   # Phase 3 — SDE calibration & Monte Carlo
-│   └── 05_trading.ipynb            # Phase 4 — Signal & backtesting
+│   ├── 02_eda.ipynb                # Phase 1 — Exploratory data analysis
+│   ├── 03_econometrics.ipynb       # Phase 2 — Correlations, GARCH-X, Granger, VAR
+│   ├── 04_stochastic_model.ipynb   # Phase 3 — SDE calibration & Heston pricing
+│   └── 05_trading.ipynb            # Phase 4 — Signal construction & backtesting
+│
 ├── src/
 │   ├── features.py                 # Feature engineering pipeline
-│   ├── models.py                   # Stochastic volatility model
-│   └── backtest.py                 # Trading strategy & evaluation
+│   ├── models.py                   # GARCHPollution, PollutionSVModel,
+│   │                               #   HestonPricer, HestonPollutionPricer
+│   └── backtest.py                 # StraddleBacktest, DeltaNeutralStrangleBacktest,
+│                                   #   RegimeSwitchingBacktest, StressTest
+│
 ├── outputs/
-│   └── figures/                    # Charts and visualizations
-├── paper/                          # Final research paper (LaTeX)
+│   └── figures/                    # All charts and visualizations
+│
+├── paper/                          # Research paper (LaTeX)
 └── README.md
 ```
 
@@ -50,49 +74,137 @@ Where:
 
 ## Data Sources
 
-| Variable | Source | Period |
-|---|---|---|
-| CSI 300 Index | Investing.com | 2015–2025 |
-| PM2.5 / PM10 Beijing | US Embassy / WAQI archive | 2015–2025 |
-| VIX | Yahoo Finance | 2015–2025 |
-| USD/CNH | Investing.com | 2015–2025 |
+| Variable | Source | Frequency | Period |
+|---|---|---|---|
+| CSI 300 Index | Investing.com | Daily | 2015–2025 |
+| PM2.5 / PM10 — Beijing | US Embassy archive | Daily | 2015–2025 |
+| VIX | Yahoo Finance | Daily | 2015–2025 |
+| USD/CNH | Investing.com | Daily | 2015–2025 |
 
-**Note:** Realized volatility is computed as the 20-day rolling standard deviation of log-returns, annualized (×√252). Missing pollution days are dropped (no forward-fill) to preserve data integrity.
+**Data notes:**
+- Realized volatility: 20-day rolling standard deviation of log-returns, annualized (×√252)
+- Missing pollution observations are **dropped** (no forward-fill) to preserve data integrity
+- Final dataset: 2,524 trading days after alignment and cleaning
 
 ---
 
-## Methodology (Roadmap)
+## Methodology
 
-| Phase | Content | Status |
-|---|---|---|
-| **Phase 1** | Data acquisition, cleaning, feature engineering | ✅ Done |
-| **Phase 2** | Correlations, Granger causality, GARCH-X | ✅ Done |
-| **Phase 3** | Stochastic volatility model (SDE + calibration) | ✅ Done |
-| **Phase 4** | Trading signal & backtesting | ✅ Done |
-| **Phase 5** | Research paper & presentation | 🔄 In progress |
+### Phase 1 — Data & Features
+- CSI 300 log-returns and 20-day realized volatility
+- PM2.5 lags (1–5 days), rolling means (5d, 20d), rolling std, standardized series
+- Merge on CSI 300 trading days; VIX and USD/CNH as macro controls
+
+### Phase 2 — Econometric Analysis
+- Pearson / Spearman / Kendall correlations → all significant at p < 0.001
+- OLS regressions with controls and monthly dummies → β significant across all specifications
+- Two-step GARCH-X → **δ = 0.0029, p < 0.001**, 26.5% contribution to conditional variance
+- Granger causality → non-significant PM2.5 → vol (linear); significant vol → PM2.5 (activity channel)
+- VAR + IRF → positive persistent response; FEVD → 0.24% at horizon 20
+
+### Phase 3 — Stochastic Volatility Model
+- CIR-type SDE with pollution drift modifier δ·P_t
+- Discretization: **Milstein scheme** (strong order 1.0)
+- Calibration: **Extended Kalman Filter** via MLE
+- Estimated parameters: α = 2.661, θ = 0.100, β = 0.537, δ = 0.00217
+- Option pricing: **Heston-Pollution MC pricer** with correlated Brownians (ρ = −0.097)
+- Benchmark: standard Heston baseline (δ = 0)
+
+### Phase 4 — Trading Strategies
+
+| Strategy | Sharpe | Win Rate | Max DD | N trades |
+|---|---|---|---|---|
+| Long straddle (baseline) | 1.53 | 81% | moderate | 37 |
+| Regime-switching | 0.97 | 62% | high | 26 |
+| **Delta-neutral strangle** | **1.67** | **86%** | low | 37 |
+
+- **Signal**: PM2.5 > rolling mean + 1σ (25-day window)
+- **Entry**: long OTM strangle (±5%), daily delta-hedge
+- **Exit**: after 50-day holding period
+- **Robustness**: Sharpe > 1.0 across all signal windows [20–45d] at holding ≥ 35d
 
 ---
 
 ## Key Hypotheses
 
-- **H1** : Pollution ↑ → Realized Volatility ↑
-- **H2** : Pollution impact is lagged (t+1 to t+5)
-- **H3** : Pollution acts as a structural drift modifier in stochastic volatility dynamics (parameter δ)
+| Hypothesis | Statement | Result |
+|---|---|---|
+| **H1** | Pollution ↑ → Realized Volatility ↑ | ✅ Confirmed |
+| **H2** | Pollution effect is lagged (t+1 to t+5) | ✅ Confirmed (CCF, peak at lag 3) |
+| **H3** | Pollution acts as structural drift modifier (δ) | ✅ Confirmed (δ > 0, p < 0.001) |
 
 ---
 
-## Requirements
+## Limitations
+
+- Options P&L approximated via Black-Scholes using realized volatility — no historical IV data available for CSI 300 options. The near-zero VIX–realized vol spread at entry dates (mean = −0.004) suggests the approximation is reasonable, but results should be interpreted as an upper bound on achievable alpha.
+- Granger causality non-significant in the linear VAR framework — the pollution–volatility relationship operates through the variance process, not the conditional mean, motivating the SDE approach.
+- Walk-forward analysis identifies 2018 and 2020–2021 as drawdown periods, coinciding with structural vol regime shifts orthogonal to the pollution signal.
+- The pollution signal is informative in one direction only — long vol performs, short vol (iron condor) does not — consistent with the asymmetric tail risk profile of Chinese equity markets.
+
+---
+
+## Installation
 
 ```bash
-pip install pandas numpy matplotlib statsmodels arch scipy yfinance
+pip install pandas numpy matplotlib seaborn statsmodels arch scipy scikit-learn yfinance
 ```
 
 ---
 
-## Status
+## Usage
 
-🚧 **Work in progress** — This README will be updated upon project completion.
+```python
+import sys
+sys.path.append('..')
+
+from src.features import features_engineering
+from src.models import PollutionSVModel, HestonPricer, HestonPollutionPricer
+from src.backtest import DeltaNeutralStrangleBacktest, StressTest
+
+# Load and engineer features
+df = pd.read_csv('../data/processed/csi300_pollution_df.csv',
+                 index_col='Date', parse_dates=True)
+df = features_engineering(df)
+
+# Fit stochastic volatility model
+sv = PollutionSVModel(sigma=df['realized_vol'], pollution=df['pm25'])
+sv.fit()
+sv.summary()
+
+# Price options under pollution scenarios
+pricer = HestonPollutionPricer(sv_model=sv, S0=df['Close'].iloc[-1],
+                                returns_series=df['returns'], r=0.03)
+pricer.scenario_table(strikes=[df['Close'].iloc[-1] * m
+                                for m in [0.90, 0.95, 1.0, 1.05, 1.10]],
+                      T=1.0)
+
+# Run optimal backtest
+bt = DeltaNeutralStrangleBacktest(df=df, sv_model=sv,
+                                   signal_window=25, holding_days=50)
+bt.run()
+bt.summary()
+bt.plot()
+
+# Stress test
+st = StressTest(df, sv)
+st.test_parameter_sensitivity(windows=[20, 25, 30, 45, 60],
+                               holdings=[5, 10, 20, 30, 50])
+```
 
 ---
 
-*Research project — 2025-2026*
+## Citation
+
+```
+Yassine [Last Name] (2026). Beijing Pollution and CSI 300 Volatility:
+A Pollution-Modified Heston Framework for Options Pricing and Volatility Trading.
+M2 MMMEF Research Project, Université Paris 1 Panthéon-Sorbonne.
+Submitted to CFA Society France Quant Awards 2026.
+```
+
+---
+
+*Yassine [Last Name] — M2 MMMEF, Université Paris 1 Panthéon-Sorbonne*
+*Co-founder, StratoQuant*
+*2025–2026*
