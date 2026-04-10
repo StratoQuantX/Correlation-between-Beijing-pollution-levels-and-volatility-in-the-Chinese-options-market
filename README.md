@@ -181,7 +181,7 @@ pricer.scenario_table(strikes=[df['Close'].iloc[-1] * m
 
 # Run optimal backtest
 bt = DeltaNeutralStrangleBacktest(df=df, sv_model=sv,
-                                   signal_window=25, holding_days=50)
+                                   signal_window=25, holding_days=60)
 bt.run()
 bt.summary()
 bt.plot()
