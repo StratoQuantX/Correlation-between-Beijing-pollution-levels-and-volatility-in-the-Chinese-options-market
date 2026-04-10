@@ -58,13 +58,12 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 │
 ├── src/
 │   ├── features.py                 # Feature engineering pipeline
-│   ├── models.py                   # GARCHPollution, PollutionSVModel,
-│   │                               #   HestonPricer, HestonPollutionPricer
-│   └── backtest.py                 # StraddleBacktest, DeltaNeutralStrangleBacktest,
-│                                   #   RegimeSwitchingBacktest, StressTest
+│   ├── models.py                   # GARCHPollution, PollutionSVModel, HestonPricer, HestonPollutionPricer
+│   └── backtest.py                 # StraddleBacktest, DeltaNeutralStrangleBacktest, RegimeSwitchingBacktest, StressTest
 │
 ├── outputs/
-│   └── figures/                    # All charts and visualizations
+│   └── figures                    # All charts and visualizations
+│   └── eda_report.html            # Interactive EDA Report generated with ydata-profiling  
 │
 ├── paper/                          # Research paper (LaTeX)
 └── README.md
