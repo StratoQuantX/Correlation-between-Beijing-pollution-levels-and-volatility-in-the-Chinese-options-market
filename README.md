@@ -83,7 +83,7 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 **Data notes:**
 - Realized volatility: 20-day rolling standard deviation of log-returns, annualized (×√252)
 - Missing pollution observations are **dropped** (no forward-fill) to preserve data integrity
-- Final dataset: 2,524 trading days after alignment and cleaning
+- Final dataset: 2,555 trading days after alignment and cleaning
 
 ---
 
