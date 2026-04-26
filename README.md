@@ -139,7 +139,7 @@ The full pipeline spans data engineering, econometric analysis, stochastic calib
 - Options P&L approximated via Black-Scholes using realized volatility — no historical IV data available for CSI 300 options. The near-zero VIX–realized vol spread at entry dates (mean = −0.004) suggests the approximation is reasonable, but results should be interpreted as an upper bound on achievable alpha.
 - Granger causality non-significant in the linear VAR framework — the pollution–volatility relationship operates through the variance process, not the conditional mean, motivating the SDE approach.
 - Walk-forward analysis identifies 2018 and 2020–2021 as drawdown periods, coinciding with structural vol regime shifts orthogonal to the pollution signal.
-- The pollution signal is informative in one direction only, i.e. long vol performs, short vol don't (we tried an iron condor, huge disaster in terms of PnL), consistent with the asymmetric tail risk profile of Chinese equity markets.
+- The pollution signal is informative in one direction only, i.e. long vol performs, short vol don't work (we tried an iron condor, huge disaster in terms of PnL), consistent with the asymmetric tail risk profile of Chinese equity markets.
 
 ---
 
